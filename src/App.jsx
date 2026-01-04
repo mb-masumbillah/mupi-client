@@ -2,8 +2,8 @@
 const App = () => {
   return (
     <div>
-      mun poly Akil   
-      masum
+    Narayanganj 
+    Polytechnic Institue 
     </div>
   );
 };

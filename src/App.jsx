@@ -4,6 +4,7 @@ const App = () => {
     <div>
     Narayanganj 
     Polytechnic Institue 
+      munshiganj polytechnic institute 
     </div>
   );
 };

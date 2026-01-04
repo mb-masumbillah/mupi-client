@@ -2,7 +2,7 @@
 const App = () => {
   return (
     <div>
-    masum
+      masum
     </div>
   );
 };

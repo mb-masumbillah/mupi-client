@@ -2,7 +2,7 @@
 const App = () => {
   return (
     <div>
-      masum
+      munshiganj polytechnic institute 
     </div>
   );
 };

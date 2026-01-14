@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const navLinkClass = `text-xl relative before:absolute before:content-[''] before:bg-[#003646] before:h-0.75 before:left-0 before:duration-400 hover:scale-105 transition-all duration-400 before:-bottom-[4px] hover:before:w-full`;
+  const pathname = usePathname(); // Current route
 
   const links = [
     { href: "/", label: "Home" },
@@ -19,14 +19,21 @@ const Navbar = () => {
     { href: "/about", label: "About MUPI" },
   ];
 
+  // Smooth hover underline with padding
+  const navLinkClass = (href) =>
+    `relative text-xl pb-1 transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:h-[3px] before:bg-[#003646] 
+     before:w-0 before:transition-all before:duration-300 hover:before:w-full ${
+       pathname === href ? "font-semibold text-primary before:w-full" : "text-gray-800"
+     }`;
+
   return (
     <section className="relative z-50 max-width">
       <nav className="flex justify-between items-center wrapper py-3">
         {/* Logo */}
-        <div className="">
+        <div>
           <Link href="/">
             <Image
-              src="logo.svg"
+              src="/logo.svg"
               alt="Logo"
               className="h-16 w-auto"
               width={64}
@@ -40,7 +47,7 @@ const Navbar = () => {
           <ul className="flex gap-8 items-center">
             {links.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className={navLinkClass}>
+                <Link href={link.href} className={navLinkClass(link.href)}>
                   {link.label}
                 </Link>
               </li>
@@ -82,7 +89,7 @@ const Navbar = () => {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={navLinkClass}
+                className={navLinkClass(link.href)}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

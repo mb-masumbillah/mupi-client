@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
         hostname: "diplomabd.com",
       },
     ],
+     domains: ["media.geeksforgeeks.org"],
   },
 };
 

@@ -11,66 +11,64 @@ import Button from "@/components/ui/Button";
 const Banner = () => {
   return (
     <section className="relative h-[85vh] overflow-hidden">
-      {/* 🔤 Static Center Text */}
-      <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
-        <div className="px-6 text-white">
-          {/* H1 - 1 Line */}
-          <h1 className="text-4xl md:text-6xl font-bold ">
+      {/* 🔥 Gradient + Dark Overlay */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/70 via-black/50 to-black/70" />
+
+      {/* 🏫 Center Content */}
+      <div className="absolute inset-0 z-20 flex items-center justify-center px-4">
+        <div className="text-center bg-black/15 backdrop-blur-xs border border-white/20 rounded-2xl px-10 py-12 shadow-2xl">
+          {/* Heading */}
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-wide">
             Munshiganj Polytechnic Institute
           </h1>
 
-          {/* Paragraph - 2 lines max */}
-          <p className="mt-4 text-lg md:text-xl opacity-90 max-w-3xl mx-auto leading-relaxed line-clamp-2">
-            A leading technical institute committed to excellence in engineering
-            education and innovation. 
+          {/* Description */}
+          <p className="mt-6 text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+            A premier government technical institute dedicated to producing
+            skilled engineers through quality education, innovation, and
+            practical excellence.
           </p>
 
-          {/* Button */}
-          <div className="flex justify-center items-center mt-6">
-            <Button text="Register Now" />
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <Button text="Registration Now" />
+            <button className="px-6 py-3 rounded-lg border border-white/60 text-white hover:bg-white hover:text-black transition">
+              Explore Departments
+            </button>
           </div>
         </div>
       </div>
 
-      {/* 🌑 Dark overlay */}
-      <div className="absolute inset-0 bg-black/60 z-10"></div>
-
-      {/* 🖼 Image Slider */}
+      {/* 🖼 Slider */}
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         effect="fade"
-        speed={1200} // 👈 smooth transition
+        speed={1200}
         autoplay={{
-          delay: 4000,
+          delay: 4500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={{ clickable: true }}
         loop
-        className="h-full w-full banner-swiper"
+        className="h-full w-full"
       >
         <SwiperSlide>
-          <div className="relative h-full w-full slide-animate">
-            <Image
-              src="https://m.media-amazon.com/images/I/71x2SI+h3BL.jpg"
-              alt="Campus View"
-              fill
-              priority
-              className="object-cover brightness-75"
-            />
-          </div>
+          <Image
+            src="https://diplomabd.com/wp-content/uploads/2017/02/munshiganj-e1693044919312.jpg"
+            alt="Campus"
+            fill
+            priority
+            className="object-cover"
+          />
         </SwiperSlide>
 
         <SwiperSlide>
-          <div className="relative h-full w-full slide-animate">
-            <Image
-              src="https://diplomabd.com/wp-content/uploads/2017/02/munshiganj-e1693044919312.jpg"
-              alt="Munshiganj Polytechnic"
-              fill
-              className="object-cover brightness-75"
-            />
-          </div>
+          <Image
+            src="https://m.media-amazon.com/images/I/71x2SI+h3BL.jpg"
+            alt="Institute View"
+            fill
+            className="object-cover"
+          />
         </SwiperSlide>
       </Swiper>
     </section>

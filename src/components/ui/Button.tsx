@@ -28,8 +28,8 @@ const Button: React.FC<TButtonProps> = ({
         ${className}
       `}
     >
-      {icon && <span>{icon}</span>}
       <span>{text}</span>
+      {icon && <span>{icon}</span>}
     </button>
   );
 };

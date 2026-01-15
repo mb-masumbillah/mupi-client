@@ -1,64 +1,93 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { Facebook, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <section className="bg-[#091924] pt-10">
-      <div className="max-width">
-        {/* Footer grid */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8">
+    <footer className="bg-[#003646] text-gray-200">
+      {/* Top Section */}
+      <div className="max-width mx-auto px-6 py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
-          {/* Footer logo and text  */}
-          <div className="py-10">
-            <div className="flex gap-4 items-center flex-col md:flex-row md:items-center">
-              <div>
-                <Image
-                  src="/logo.svg" // logo.svg must be in /public folder
-                  alt="MUPI Logo"
-                  width={48}      // ✅ fixed width
-                  height={48}     // ✅ fixed height
-                  className="h-12 w-auto"
-                />
-              </div>
-              <h2 className="text-2xl font-semibold text-white text-center md:text-left">
-                <span className="text-4xl">Munshiganj</span> <br /> Polytechnic Institute
-              </h2>
-            </div>
+        {/* Logo & About */}
+        <div className="space-y-4">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.svg"
+              alt="MUPI Logo"
+              width={50}
+              height={50}
+              className="bg-white rounded-md p-1"
+            />
+            <span className="text-xl font-bold text-white">
+              MUPI
+            </span>
+          </Link>
 
-            <p className="text-gray-500 py-4 text-center md:text-left">
-              Munshiganj Polytechnic Institute, Mirkadim, Munshiganj
-            </p>
-            <p className="text-gray-500 py-3 text-center md:text-left">
-              Copyright © 2025 MUPI. All Rights Reserved.
-            </p>
+          <p className="text-sm leading-relaxed text-gray-300">
+            Munshiganj Polytechnic Institute is committed to providing quality
+            technical education and preparing skilled professionals for the future.
+          </p>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/" className="hover:text-white transition">Home</Link></li>
+            <li><Link href="/academic" className="hover:text-white transition">Academic</Link></li>
+            <li><Link href="/instructors" className="hover:text-white transition">Instructors</Link></li>
+            <li><Link href="/notice" className="hover:text-white transition">Notice</Link></li>
+          </ul>
+        </div>
+
+        {/* Important Links */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-white">Important</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/about" className="hover:text-white transition">About MUPI</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
+            <li><Link href="/login" className="hover:text-white transition">Login</Link></li>
+            <li><Link href="/register" className="hover:text-white transition">Registration</Link></li>
+          </ul>
+        </div>
+
+        {/* Contact Info */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4 text-white">Contact</h4>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-center gap-2">
+              <MapPin size={16} /> Munshiganj, Bangladesh
+            </li>
+            <li className="flex items-center gap-2">
+              <Phone size={16} /> +880 1XXX-XXXXXX
+            </li>
+            <li className="flex items-center gap-2">
+              <Mail size={16} /> info@mupi.edu.bd
+            </li>
+          </ul>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 mt-4">
+            <Link href="#" className="hover:text-white transition">
+              <Facebook size={20} />
+            </Link>
+            <Link href="#" className="hover:text-white transition">
+              <Linkedin size={20} />
+            </Link>
+            <Link href="#" className="hover:text-white transition">
+              <Youtube size={20} />
+            </Link>
           </div>
-
-          {/* Quick Links */}
-          <div className="text-gray-400">
-            <h3 className="py-3 text-2xl">Quick Links</h3>
-            <p className="py-2 cursor-pointer hover:text-white">Home</p>
-            <p className="py-2 cursor-pointer hover:text-white">About</p>
-            <p className="py-2 cursor-pointer hover:text-white">Academic</p>
-            <p className="py-2 cursor-pointer hover:text-white">Institute</p>
-            <p className="py-2 cursor-pointer hover:text-white">About MUPI</p>
-          </div>
-
-          <div className="text-gray-400">
-            <h3 className="py-3 text-2xl">Quick Links</h3>
-            <p className="py-2 cursor-pointer hover:text-white">Dashboard</p>
-            <p className="py-2 cursor-pointer hover:text-white">Admission</p>
-          </div>
-
-          <div className="text-gray-400">
-            <h3 className="py-3 text-2xl">Contact Us</h3>
-            <p className="py-2">Email: munpoly@gmail.com</p>
-            <p className="py-2">Phone: +088 1234567890</p>
-          </div>
-
         </div>
       </div>
-    </section>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-white/20 py-4 text-center text-sm text-gray-300">
+        © {new Date().getFullYear()} Munshiganj Polytechnic Institute. All rights reserved.
+      </div>
+    </footer>
   );
 };
 

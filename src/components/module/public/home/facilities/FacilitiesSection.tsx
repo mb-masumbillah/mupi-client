@@ -53,7 +53,7 @@ const facilities = [
 
 const FacilitiesSection = () => {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-gray-100 py-20">
       <div className="max-width px-4">
         {/* Section Header */}
         <div className="mb-12 text-center">

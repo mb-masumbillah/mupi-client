@@ -50,7 +50,7 @@ const departments = [
 
 const DepartmentsSection = () => {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-gray-100 py-20">
       <div className="max-width px-4">
         {/* Section Header */}
         <div className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">

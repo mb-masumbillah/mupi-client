@@ -13,7 +13,7 @@ interface TextInputProps<T extends FieldValues> {
   control: Control<T>;
   rules?: RegisterOptions<T, Path<T>>;
   placeholder?: string;
-  type: string;
+  type?: string;
 }
 
 const TextInput = <T extends FieldValues>({
@@ -33,21 +33,28 @@ const TextInput = <T extends FieldValues>({
       <Controller
         name={name}
         control={control}
-        defaultValue={undefined}
         rules={rules}
         render={({ field, fieldState }) => (
           <>
             <div className="relative">
               <input
                 {...field}
-                type={type === "password" ? (show ? "text" : "password") : type}
+                value={(field.value ?? "") as string} // ✅ KEY FIX
+                type={
+                  type === "password"
+                    ? show
+                      ? "text"
+                      : "password"
+                    : type
+                }
                 placeholder={placeholder}
-                className={`w-full border-2 border-gray-300 rounded-xl px-3 py-2 pr-10 focus:outline-none focus:border-2 ${
-                  fieldState.error ? "border-red-500" : "focus:border-[#00455D]"
+                className={`w-full border-2 border-gray-300 rounded-xl px-3 py-2 pr-10 focus:outline-none ${
+                  fieldState.error
+                    ? "border-red-500"
+                    : "focus:border-[#00455D]"
                 }`}
               />
 
-              {/* Show / Hide button only when type is password */}
               {type === "password" && (
                 <button
                   type="button"

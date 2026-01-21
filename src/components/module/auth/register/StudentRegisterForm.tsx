@@ -3,10 +3,13 @@
 import ImageUpload from "@/components/form/ImageUpload";
 import SelectInput from "@/components/form/SelectInput";
 import TextInput from "@/components/form/TextInput";
+import { registerStudent } from "@/services/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
 
 interface StudentRegisterForm {
   fullName: string;
@@ -26,9 +29,14 @@ interface StudentRegisterForm {
 const StudentRegisterForm = () => {
   const router = useRouter();
 
-  const { handleSubmit, control, watch } = useForm<StudentRegisterForm>();
+  const { handleSubmit, control, reset } = useForm<StudentRegisterForm>({
+    mode: "onChange",
+  });
 
-  const password = watch("password");
+  const password = useWatch({
+    control,
+    name: "password",
+  });
 
   const onSubmit = async (data: StudentRegisterForm) => {
     const studentData = {
@@ -42,18 +50,36 @@ const StudentRegisterForm = () => {
         shift: data.shift,
         semester: data.semester,
         email: data.email,
-        password: data.password,
         number: data.number,
       },
     };
-
-    console.log({ studentData });
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
     if (data.image) formData.append("file", data.image);
 
-    console.log(formData);
+    try {
+      const res = await registerStudent(formData);
+
+      console.log(res);
+
+      if (res.success) {
+        Swal.fire({
+          title: "রেজিস্ট্রেশন সফল হয়েছে 🎉",
+          text: "আপনি রেজিস্টার সফলভাবে সম্পন্ন করেছেন। এখন রেজিস্টার শাখায় যোগাযোগ করে আপনার অ্যাকাউন্ট Approve নিশ্চিত করুন।",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then(() => {
+          router.replace("/");
+        });
+      } else {
+        toast.error(res?.message);
+      }
+
+      reset();
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
 
   return (
@@ -67,10 +93,11 @@ const StudentRegisterForm = () => {
           <h2 className="text-2xl font-bold text-gray-800">
             Student Registration
           </h2>
-          <p className="text-sm text-gray-500">Please register to continue</p>
+          <p className="text-sm text-gray-500">
+            Please fill the form carefully
+          </p>
         </div>
 
-        {/* Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -78,132 +105,138 @@ const StudentRegisterForm = () => {
           <TextInput
             label="Full Name"
             name="fullName"
-            type="text"
+            placeholder="Enter your full name"
             control={control}
-            rules={{ required: "Name is required" }}
-            placeholder="Enter full name"
+            rules={{ required: "Full name is required" }}
           />
 
           <TextInput
             label="Roll"
             name="roll"
             type="number"
+            placeholder="123456"
             control={control}
-            rules={{ required: "Roll is required" }}
-            placeholder="651272"
+            rules={{ required: "Roll number is required" }}
           />
 
           <TextInput
-            label="Registration"
+            label="Registration No"
             name="registration"
             type="number"
+            placeholder="1234567890"
             control={control}
-            rules={{ required: "Registration required" }}
-            placeholder="651272123"
+            rules={{ required: "Registration number is required" }}
           />
 
           <SelectInput
             label="Department"
             name="department"
             control={control}
-            rules={{ required: "Department is required" }}
-            options={["CST", "EEE", "Civil", "Mechanical"]}
+            rules={{ required: "Select your department" }}
+            options={[
+              "Computer",
+              "Electrical",
+              "Civil",
+              "Mechanical",
+              "IPCT",
+              "Electronics",
+              "Electro_Medical",
+              "RAC",
+            ]}
           />
 
           <TextInput
             label="Session"
             name="session"
-            type="text"
+            placeholder="2022-2023"
             control={control}
             rules={{
               required: "Session is required",
               pattern: {
                 value: /^\d{4}-\d{4}$/,
-                message: "Format: YYYY-YYYY (e.g. 2022-2023)",
+                message: "Use format: 2022-2023",
               },
             }}
-            placeholder="2022-2023"
           />
 
           <SelectInput
             label="Shift"
             name="shift"
             control={control}
-            rules={{ required: "Shift is required" }}
-            options={["1st", "2nd"]}
+            rules={{ required: "Select shift" }}
+            options={["First", "Second"]}
           />
 
           <SelectInput
             label="Semester"
             name="semester"
             control={control}
-            rules={{ required: "Semester is required" }}
-            options={["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th"]}
+            rules={{ required: "Select semester" }}
+            options={[
+              "First",
+              "Second",
+              "Third",
+              "Fourth",
+              "Fifth",
+              "Sixth",
+              "Seventh",
+              "Eighth",
+            ]}
           />
 
           <TextInput
-            label="Email"
+            label="Email Address"
             name="email"
             type="email"
-            control={control}
-            rules={{
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter a valid email",
-              },
-            }}
             placeholder="example@gmail.com"
+            control={control}
+            rules={{ required: "Email is required" }}
           />
 
           <TextInput
             label="Password"
             name="password"
             type="password"
+            placeholder="Minimum 6 characters"
             control={control}
             rules={{
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Minimum 6 characters",
-              },
+              required: "Password required",
+              minLength: { value: 6, message: "At least 6 characters" },
             }}
-            placeholder="••••••"
           />
 
           <TextInput
             label="Confirm Password"
             name="confirmPassword"
             type="password"
+            placeholder="Re-enter your password"
             control={control}
             rules={{
-              required: "Confirm password is required",
+              required: "Confirm your password",
               validate: (value) =>
                 value === password || "Passwords do not match",
             }}
-            placeholder="••••••"
           />
 
           <TextInput
             label="WhatsApp Number"
             name="number"
-            type="text"
+            placeholder="+8801XXXXXXXXX"
             control={control}
             rules={{
-              required: "Number is required",
+              required: "Phone number required",
               pattern: {
                 value: /^\+8801[3-9][0-9]{8}$/,
                 message: "Use +8801XXXXXXXXX format",
               },
             }}
-            placeholder="+8801XXXXXXXXX"
           />
 
           <ImageUpload
             label="Student Image"
             name="image"
             control={control}
-            rules={{ required: "Image is required" }}
+            rules={{ required: "Student image is required" }}
           />
 
           <div className="md:col-span-2 flex justify-center mt-4">
@@ -216,7 +249,6 @@ const StudentRegisterForm = () => {
           </div>
         </form>
 
-        {/* Footer */}
         <p className="text-center text-sm text-gray-500">
           Already have an account?{" "}
           <Link

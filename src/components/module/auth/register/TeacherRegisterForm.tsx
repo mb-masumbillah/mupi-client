@@ -1,13 +1,17 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Image from "next/image";
 import TextInput from "@/components/form/TextInput";
 import ImageUpload from "@/components/form/ImageUpload";
+import { registerInstructor } from "@/services/user";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface TeacherRegisterFormData {
-  name: string;
-  teacherId: string;
+  fullName: string;
+  instructorId: string;
   email: string;
   number: string;
   password: string;
@@ -16,33 +20,63 @@ interface TeacherRegisterFormData {
 }
 
 const TeacherRegisterForm = () => {
-  const { handleSubmit, control, watch } =
-    useForm<TeacherRegisterFormData>({
-      defaultValues: {
-        image: null,
+  const { handleSubmit, control, reset } = useForm<TeacherRegisterFormData>({
+    defaultValues: {
+      image: null,
+    },
+  });
+  const router = useRouter() 
+
+  const password = useWatch({
+    control,
+    name: "password",
+  });
+
+  const onSubmit = async(data: TeacherRegisterFormData) => {
+    const instructorData = {
+      password: data.password,
+      instructor: {
+        fullName: data.fullName,
+        instructorId: data.instructorId,
+        email: data.email,
+        number: data.number,
       },
-    });
+    };
 
-  const password = watch("password");
-
-  const onSubmit = (data: TeacherRegisterFormData) => {
-    console.log("Teacher Register Data:", data);
+    console.log(instructorData)
 
     const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("teacherId", data.teacherId);
-    formData.append("email", data.email);
-    formData.append("number", data.number);
-    formData.append("password", data.password);
-    if (data.image) formData.append("image", data.image);
+    formData.append("data", JSON.stringify(instructorData));
+    if (data.image) formData.append("file", data.image);
 
-    // 👉 API call here
+    try {
+      const res = await registerInstructor(formData)
+
+      console.log(res)
+
+      if (res.success) {
+        Swal.fire({
+          title: "রেজিস্ট্রেশন সফল হয়েছে 🎉",
+          text: "আপনি রেজিস্টার সফলভাবে সম্পন্ন করেছেন। এখন রেজিস্টার শাখায় যোগাযোগ করে আপনার অ্যাকাউন্ট Approve নিশ্চিত করুন।",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then(() => {
+          router.replace("/");
+        });
+      } else {
+        toast.error(res?.message);
+      }
+
+      reset();
+
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6 space-y-6 animate-fadeIn">
-
         {/* 🔰 Header with Logo */}
         <div className="text-center space-y-2">
           <div className="flex justify-center">
@@ -70,7 +104,7 @@ const TeacherRegisterForm = () => {
         >
           <TextInput<TeacherRegisterFormData>
             label="Teacher Name"
-            name="name"
+            name="fullName"
             control={control}
             rules={{ required: "Name is required" }}
             placeholder="Enter teacher name"
@@ -78,7 +112,7 @@ const TeacherRegisterForm = () => {
 
           <TextInput<TeacherRegisterFormData>
             label="Teacher ID"
-            name="teacherId"
+            name="instructorId"
             control={control}
             rules={{ required: "Teacher ID is required" }}
             placeholder="TCH-001"

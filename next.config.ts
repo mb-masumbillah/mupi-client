@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "diplomabd.com",
       },
+        {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/**', 
+      },
     ],
      domains: ["media.geeksforgeeks.org"],
   },

@@ -10,12 +10,12 @@ const Register = () => {
 
   return (
     <div>
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gray-100">
         {/* Role Select */}
 
         {!role && (
           <div className="flex max-w-md mx-auto justify-center items-center min-h-screen">
-            <div className="border p-10 border-gray-300 rounded-2xl w-full">
+            <div className="border p-10 border-gray-300 bg-white rounded-2xl w-full">
               {/* Logo */}
               <div className="flex justify-center mb-4">
                 <Image src="/logo.svg" alt="Logo" width={90} height={90} />
@@ -28,7 +28,7 @@ const Register = () => {
               <div className="flex gap-4">
                 <button
                   onClick={() => setRole("student")}
-                  className="w-full py-3 rounded-xl border-2 border-[#00455D] text-[#00455D] font-semibold hover:bg-[#00455D] hover:text-white transition px-5 cursor-pointer"
+                  className="w-full py-3 rounded-xl border-2 border-[#00455D] hover:text-[#00455D] font-semibold bg-[#00455D] hover:bg-white text-white transition px-5 cursor-pointer"
                 >
                   Student Register
                 </button>

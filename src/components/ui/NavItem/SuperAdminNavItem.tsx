@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  openMenu: string | null;
-  setOpenMenu: (menu: string | null) => void;
-  linkClass: (href: string) => string;
   navClass: (isActive: boolean) => string;
 }
 
-const SuperAdminNavItem = ({ openMenu, setOpenMenu, linkClass, navClass }: Props) => {
-  const toggleMenu = (menu: string) => setOpenMenu(openMenu === menu ? null : menu);
+const SuperAdminNavItem = ({
+  navClass,
+}: Props) => {
 
   // ✅ use client-only hook
   const pathname = usePathname() || "";
@@ -21,49 +19,43 @@ const SuperAdminNavItem = ({ openMenu, setOpenMenu, linkClass, navClass }: Props
 
   return (
     <div>
-      <Link href="/dashboard/super-admin" className={navClass(isActive("/dashboard/super-admin"))}>
+      <Link
+        href="/dashboard/super-admin"
+        className={navClass(isActive("/dashboard/super-admin"))}
+      >
         <span>Dashboard</span>
         <ChevronRight />
       </Link>
 
-      <button
-        onClick={() => toggleMenu("allStudent")}
-        className={`w-full px-3 py-2 flex justify-between items-center rounded mt-2 ${
-          openMenu === "allStudent" ? "bg-[#00455D] text-white" : "hover:bg-[#e0f0f7]"
-        }`}
+      <Link
+        href="/dashboard/super-admin/all-student"
+        className={navClass(isActive("/dashboard/super-admin/all-student"))}
       >
         <span>All Student</span>
-        <ChevronDown />
-      </button>
+        <ChevronRight />
+      </Link>
 
-      {openMenu === "allStudent" && (
-        <div className="bg-[#00455D] text-white rounded px-5 py-2">
-          <Link
-            href="/dashboard/super-admin/all-student"
-            className={linkClass("/dashboard/super-admin/all-student")}
-          >
-            All Student
-          </Link>
-          <Link
-            href="/dashboard/super-admin/student-approval"
-            className={linkClass("/dashboard/super-admin/student-approval")}
-          >
-            Student Approval
-          </Link>
-          <Link
-            href="/dashboard/super-admin/all-payment"
-            className={linkClass("/dashboard/super-admin/all-payment")}
-          >
-            All Payment
-          </Link>
-          <Link
-            href="/dashboard/super-admin/payment-approval"
-            className={linkClass("/dashboard/super-admin/payment-approval")}
-          >
-            Payment Approval
-          </Link>
-        </div>
-      )}
+      <Link
+        href="/dashboard/super-admin/all-payment"
+        className={navClass(isActive("/dashboard/super-admin/all-payment"))}
+      >
+        <span>All Payment</span>
+        <ChevronRight />
+      </Link>
+      <Link
+        href="/dashboard/super-admin/student-approval"
+        className={navClass(isActive("/dashboard/super-admin/student-approval"))}
+      >
+        <span>Student Approval</span>
+        <ChevronRight />
+      </Link>
+      <Link
+        href="/dashboard/super-admin/payment-approval"
+        className={navClass(isActive("/dashboard/super-admin/payment-approval"))}
+      >
+        <span>Payment Approval</span>
+        <ChevronRight />
+      </Link>
     </div>
   );
 };

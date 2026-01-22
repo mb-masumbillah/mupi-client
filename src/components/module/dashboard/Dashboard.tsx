@@ -1,11 +1,11 @@
 "use client";
 
-import { logout } from "@/services/auth";
+import useUser from "@/hooks/useUser";
 import SuperAdminNavItem from "../../ui/NavItem/SuperAdminNavItem";
 import { Home, LogOut, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface DashboardProps {
@@ -13,24 +13,22 @@ interface DashboardProps {
 }
 
 const Dashboard = ({ children }: DashboardProps) => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const pathname = usePathname();
+  const { logoutUser } = useUser();
   const router = useRouter();
 
   // replace with RTK Query / Auth context
-  const designation: "superAdmin" | "temporaryAdmin" | "student" | "instructor" = "superAdmin";
+  const designation:
+    | "superAdmin"
+    | "temporaryAdmin"
+    | "student"
+    | "instructor" = "superAdmin";
 
   const handleLogout = () => {
-    logout()
+    logoutUser();
     router.replace("/");
   };
 
-  const linkClass = (href: string) =>
-    `block w-full px-2 py-2 rounded text-sm border mb-2 border-[#006A8E] ${
-      pathname === href ? "bg-[#006A8E] text-white" : "hover:bg-[#006A8E]/30"
-    }`;
 
   const navClass = (isActive: boolean) =>
     `px-3 py-2 rounded flex justify-between items-center ${
@@ -60,16 +58,19 @@ const Dashboard = ({ children }: DashboardProps) => {
 
         <div className="border border-gray-300 py-4 flex justify-center">
           <Link href="/">
-            <Image src="/logo.svg" alt="Logo" width={120} height={40} priority />
+            <Image
+              src="/logo.svg"
+              alt="Logo"
+              width={120}
+              height={40}
+              priority
+            />
           </Link>
         </div>
 
         <div className="p-4 pt-8 pl-0 space-y-3 flex-1 overflow-y-auto">
           {designation === "superAdmin" && (
             <SuperAdminNavItem
-              openMenu={openMenu}
-              setOpenMenu={setOpenMenu}
-              linkClass={linkClass}
               navClass={navClass}
             />
           )}

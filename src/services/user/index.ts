@@ -1,3 +1,6 @@
+"use server";
+import { cookies } from "next/headers";
+
 export const registerStudent = async (formData: FormData) => {
   try {
     const res = await fetch(
@@ -25,8 +28,6 @@ export const registerInstructor = async (formData: FormData) => {
       },
     );
 
-    console.log(res)
-
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -34,4 +35,45 @@ export const registerInstructor = async (formData: FormData) => {
   }
 };
 
+export const chnageStatus = async (email: string) => {
+  const token = (await cookies()).get("accessToken")?.value;
 
+  if (!token) throw new Error("Unauthorized: No access token found");
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/change-status/${email}`,
+      {
+        method: "PATCH",
+        cache: "no-store",
+        headers: {
+          authorization: token,
+        },
+      },
+    );
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const myProfile = async () => {
+  const token = (await cookies()).get("accessToken")?.value;
+
+  if (!token) throw new Error("Unauthorized: No access token found");
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/me`, {
+      method: "POST",
+      headers: {
+        authorization: token,
+      },
+    });
+
+    const result = await res.json();
+    return result;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};

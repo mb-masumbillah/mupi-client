@@ -1,59 +1,49 @@
-// import { getCurrentUser } from "@/services/auth";
-import { getCurrentUser } from "@/services/auth";
-import { IUser } from "@/types/user";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+"use client";
 
-export interface IUserProviderValues {
+import React, { createContext, useState, useEffect } from "react";
+import { getCurrentUser, logout } from "@/services/auth";
+import { IUser } from "@/types/user";
+
+interface IUserProvider {
   user: IUser | null;
   isLoading: boolean;
   setUser: (user: IUser | null) => void;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  logoutUser: () => void;
 }
 
-export const UserContext = createContext<IUserProviderValues | undefined>(
-  undefined,
-);
+export const UserContext = createContext<IUserProvider | undefined>(undefined);
 
-const UserProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleUser = async () => {
-    const user = await getCurrentUser();
-
-    setUser(user);
-    setIsLoading(false);
+  // ===================== FETCH USER =====================
+  const fetchUser = async () => {
+    try {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } catch (err) {
+      console.error("User fetch error:", err);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  // ===================== LOGOUT =====================
+  const logoutUser = async () => {
+    await logout();
+    setUser(null);
+  };
+
+  // ===================== INITIAL LOAD =====================
   useEffect(() => {
-    handleUser();
-  }, [isLoading]);
-
-
-  //   useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     const data = await getRefreshTokenToAccessToken();
-  //     setProfile(data);
-  //   };
-  //   fetchProfile();
-  // }, []);
-
-  const userInfo = {
-    user,
-    isLoading,
-    setUser,
-    setIsLoading,
-  };
+    fetchUser();
+  }, []);
 
   return (
-    <UserContext.Provider value={userInfo}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, isLoading, setUser, logoutUser }}>
+      {children}
+    </UserContext.Provider>
   );
 };
-
-export default UserProvider;

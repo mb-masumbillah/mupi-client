@@ -14,7 +14,7 @@ const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     ...options,
     headers: {
       ...options.headers,
-      Authorization: token,
+      authorization: token,
     },
   });
 

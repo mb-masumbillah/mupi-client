@@ -1,12 +1,14 @@
 // src/components/module/auth/login/LoginForm.tsx
 "use client";
+
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { login } from "@/services/auth";
+import { login, getCurrentUser } from "@/services/auth";
 import TextInput from "@/components/form/TextInput";
 import Image from "next/image";
 import Link from "next/link";
+import useUser from "@/hooks/useUser"; // ✅ Import UserContext hook
 
 export interface LoginFormValues {
   email: string;
@@ -16,13 +18,43 @@ export interface LoginFormValues {
 const LoginForm = () => {
   const router = useRouter();
   const { control, handleSubmit } = useForm<LoginFormValues>();
+  const { setUser } = useUser(); // ✅ Access setUser to update context
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const res = await login(data);
+
       if (res.success) {
         toast.success(res.message);
-        router.push("/dashboard");
+
+        // get current user from access token
+        const currentUser = await getCurrentUser();
+
+        if (!currentUser) {
+          toast.error("User data not found");
+          return;
+        }
+
+        // ✅ Update UserContext immediately
+        setUser(currentUser);
+
+        // role based redirect
+        switch (currentUser.role) {
+          case "superAdmin":
+            router.push("/dashboard/super-admin");
+            break;
+          case "temporaryAdmin":
+            router.push("/dashboard/temporary-admin");
+            break;
+          case "student":
+            router.push("/dashboard/student");
+            break;
+          case "instructor":
+            router.push("/dashboard/instructor");
+            break;
+          default:
+            router.push("/dashboard");
+        }
       } else {
         toast.error(res.message);
       }
@@ -57,18 +89,32 @@ const LoginForm = () => {
             name="password"
             type="password"
             control={control}
-            rules={{ required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } }}
+            rules={{
+              required: "Password is required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            }}
             placeholder="••••••"
           />
 
-          <button type="submit" className="w-full bg-[#00455D] text-white py-2 px-6 rounded-xl hover:bg-transparent hover:text-[#00455D] border border-transparent hover:border-[#00455D] transition">
+          <button
+            type="submit"
+            className="w-full bg-[#00455D] text-white py-2 px-6 rounded-xl hover:bg-transparent hover:text-[#00455D] border border-transparent hover:border-[#00455D] transition"
+          >
             Login
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-500">
           {"Don't have an account? "}
-          <Link href="/student-register" className="text-[#00455D] font-semibold hover:underline">Register</Link>
+          <Link
+            href="/student-register"
+            className="text-[#00455D] font-semibold hover:underline"
+          >
+            Register
+          </Link>
         </p>
       </div>
     </div>

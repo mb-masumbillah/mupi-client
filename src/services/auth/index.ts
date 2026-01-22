@@ -1,26 +1,22 @@
-// src/services/auth/index.ts
-import { LoginFormValues } from "@/components/module/auth/login/LoginForm";
-import { fetchWithAuth } from "@/utils/fetchWithAuth";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
+import { IUser } from "@/types/user";
+import { LoginFormValues } from "@/components/module/auth/login/LoginForm";
 
 export const login = async (userData: LoginFormValues) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
       credentials: "include", // refresh token cookie backend থেকে পাঠানোর জন্য
     });
 
-
     const result = await res.json();
 
-    // Client-side cookie set (js-cookie)
     if (result?.success && result?.data?.accessToken) {
-      Cookies.set("accessToken", result.data.accessToken, { expires: 1 }); // 1 day
+      Cookies.set("accessToken", result.data.accessToken, { expires: 10 }); // 10 মিনিট 
+      // 2 মিনিট { expires: 1 / 720 }
     }
 
     return result;
@@ -29,26 +25,18 @@ export const login = async (userData: LoginFormValues) => {
   }
 };
 
-export const getRefreshTokenToAccessToken = async () => {
-  return fetchWithAuth("/user/profile", { method: "GET" });
-};
+export const getCurrentUser = async (): Promise<IUser | null> => {
+  const token = Cookies.get("accessToken");
+  if (!token) return null;
 
-
-export const getCurrentUser = async() => {
-  const accessToken = Cookies.get("accessToken"); 
-
-  let decodedData = null
-
-  if(accessToken){
-    decodedData = await jwtDecode(accessToken)
-    return decodedData
-  }else{
-    decodedData = null
+  try {
+    const decoded = jwtDecode(token) as IUser;
+    return decoded;
+  } catch {
+    return null;
   }
-
 };
-
 
 export const logout = async () => {
-  Cookies.remove("accessToken")
+  Cookies.remove("accessToken");
 };

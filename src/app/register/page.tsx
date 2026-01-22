@@ -6,7 +6,7 @@ import TeacherRegisterForm from "@/components/module/auth/register/TeacherRegist
 import Image from "next/image";
 
 const Register = () => {
-  const [role, setRole] = useState<"student" | "teacher" | null>(null);
+  const [role, setRole] = useState<"student" | "instructor" | null>(null);
 
   return (
     <div>
@@ -34,7 +34,7 @@ const Register = () => {
                 </button>
 
                 <button
-                  onClick={() => setRole("teacher")}
+                  onClick={() => setRole("instructor")}
                   className="w-full py-3 px-5 rounded-xl border-2 border-[#00455D] text-[#00455D] font-semibold hover:bg-[#00455D] hover:text-white transition  cursor-pointer"
                 >
                   Teacher Register
@@ -58,7 +58,7 @@ const Register = () => {
         )}
 
         {/* Teacher Form */}
-        {role === "teacher" && (
+        {role === "instructor" && (
           <>
            <button
               onClick={() => setRole(null)}

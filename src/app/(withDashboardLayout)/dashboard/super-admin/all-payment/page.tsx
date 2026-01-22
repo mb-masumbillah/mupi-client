@@ -2,7 +2,7 @@
 const AllPayment = () => {
     return (
         <div>
-            
+            all payment
         </div>
     );
 };

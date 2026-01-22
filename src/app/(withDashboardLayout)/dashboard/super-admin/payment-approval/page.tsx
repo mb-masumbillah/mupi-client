@@ -2,7 +2,7 @@
 const PaymentApproval = () => {
     return (
         <div>
-            
+            payment approval
         </div>
     );
 };

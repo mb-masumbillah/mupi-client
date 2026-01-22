@@ -7,7 +7,7 @@ export default function NotFound() {
       <div className="bg-white shadow-xl rounded-2xl p-10 max-w-xl text-center">
 
         {/* 404 TEXT */}
-        <h1 className="text-8xl font-extrabold text-blue-600">404</h1>
+        <h1 className="text-8xl font-extrabold text-[#00455D]">404</h1>
 
         <h2 className="text-2xl font-semibold mt-4">
           Page Not Found
@@ -22,7 +22,7 @@ export default function NotFound() {
 
           <Link
             href="/"
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="flex items-center gap-2 bg-[#00455D] text-white px-6 py-2 rounded-lg hover:bg-[#00455D] transition"
           >
             <Home size={18} />
             Go Home

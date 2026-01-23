@@ -1,11 +1,12 @@
 
 
-import AboutSection from "@/components/module/public/home/about/AboutSection";
-import Banner from "@/components/module/public/home/banner/Banner";
-import DepartmentsSection from "@/components/module/public/home/department/DepartmentsSection";
-import FacilitiesSection from "@/components/module/public/home/facilities/FacilitiesSection";
-import InstructorSection from "@/components/module/public/home/instructor/InstructorSection";
-import NoticeSection from "@/components/module/public/home/notice/NoticeSection";
+
+import AboutSection from "@/src/components/module/public/home/about/AboutSection";
+import Banner from "@/src/components/module/public/home/banner/Banner";
+import DepartmentsSection from "@/src/components/module/public/home/department/DepartmentsSection";
+import FacilitiesSection from "@/src/components/module/public/home/facilities/FacilitiesSection";
+import InstructorSection from "@/src/components/module/public/home/instructor/InstructorSection";
+import NoticeSection from "@/src/components/module/public/home/notice/NoticeSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

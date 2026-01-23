@@ -1,9 +1,9 @@
 "use client";
 
-import ImageUpload from "@/components/form/ImageUpload";
-import SelectInput from "@/components/form/SelectInput";
-import TextInput from "@/components/form/TextInput";
-import { registerStudent } from "@/services/user";
+import ImageUpload from "@/src/components/form/ImageUpload";
+import SelectInput from "@/src/components/form/SelectInput";
+import TextInput from "@/src/components/form/TextInput";
+import { registerStudent } from "@/src/services/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

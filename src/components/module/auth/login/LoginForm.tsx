@@ -4,11 +4,11 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { login, getCurrentUser } from "@/services/auth";
-import TextInput from "@/components/form/TextInput";
+import { login, getCurrentUser } from "@/src/services/auth";
+import TextInput from "@/src/components/form/TextInput";
 import Image from "next/image";
 import Link from "next/link";
-import useUser from "@/hooks/useUser"; // ✅ Import UserContext hook
+import useUser from "@/src/hooks/useUser"; // ✅ Import UserContext hook
 
 export interface LoginFormValues {
   email: string;

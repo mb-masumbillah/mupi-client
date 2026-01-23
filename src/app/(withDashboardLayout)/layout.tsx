@@ -1,4 +1,4 @@
-import Dashboard from "@/components/module/dashboard/Dashboard";
+import Dashboard from "@/src/components/module/dashboard/Dashboard";
 import React from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

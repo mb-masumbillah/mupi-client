@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import StudentRegisterForm from "@/components/module/auth/register/StudentRegisterForm";
-import TeacherRegisterForm from "@/components/module/auth/register/TeacherRegisterForm";
+import StudentRegisterForm from "@/src/components/module/auth/register/StudentRegisterForm";
+import TeacherRegisterForm from "@/src/components/module/auth/register/TeacherRegisterForm";
 import Image from "next/image";
 
 const Register = () => {
@@ -47,7 +47,7 @@ const Register = () => {
         {/* Student Form */}
         {role === "student" && (
           <>
-           <button
+            <button
               onClick={() => setRole(null)}
               className="text-sm text-gray-500 mb-2"
             >
@@ -60,7 +60,7 @@ const Register = () => {
         {/* Teacher Form */}
         {role === "instructor" && (
           <>
-           <button
+            <button
               onClick={() => setRole(null)}
               className="text-sm text-gray-500 mb-2"
             >

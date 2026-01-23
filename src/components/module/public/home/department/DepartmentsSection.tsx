@@ -1,54 +1,36 @@
+
 import Link from "next/link";
 import Image from "next/image";
 import { MoveRight } from "lucide-react";
 
 const departments = [
   {
-    id: 1,
+    id: "cst",
     name: "Computer Technology",
     short:
       "Focused on software development, networking, and modern computing technologies.",
     image:
-      "https://media.geeksforgeeks.org/wp-content/uploads/20240710085808/desktop.jpg",
+      "/academic/computer.png",
   },
   {
-    id: 2,
+    id: "et",
     name: "Electrical Technology",
     short:
       "Covers electrical systems, power generation, and industrial automation.",
-    image: "/images/departments/electrical.png",
+    image: "/academic/Electrical.png",
   },
   {
-    id: 3,
+    id: "cst",
     name: "Civil Technology",
     short:
       "Specializes in construction, structural design, and infrastructure development.",
-    image: "/images/departments/civil.png",
-  },
-  {
-    id: 4,
-    name: "Mechanical Technology",
-    short:
-      "Deals with machines, manufacturing processes, and mechanical systems.",
-    image: "/images/departments/mechanical.png",
-  },
-  {
-    id: 5,
-    name: "Electronics Technology",
-    short:
-      "Focuses on electronic circuits, communication systems, and devices.",
-    image: "/images/departments/electronics.png",
-  },
-  {
-    id: 6,
-    name: "Power Technology",
-    short:
-      "Concentrates on power plants, transmission, and energy management systems.",
-    image: "/images/departments/power.png",
+    image: "/academic/Civil.png",
   },
 ];
 
 const DepartmentsSection = () => {
+
+
   return (
     <section className="bg-gray-100 py-20">
       <div className="max-width px-4">
@@ -65,7 +47,7 @@ const DepartmentsSection = () => {
           </div>
 
           <Link
-            href="/departments"
+            href="/academic"
             className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all border-b-0 hover:border-b"
           >
             <span>View All Departments</span>
@@ -75,13 +57,14 @@ const DepartmentsSection = () => {
 
         {/* Departments Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {departments.map((dept) => (
+          {departments.map((dept, idx) => (
             <div
-              key={dept.id}
-              className="group bg-white rounded-2xl overflow-hidden border shadow-md hover:shadow-2xl transition-all duration-300"
+              key={idx}
+              className="group bg-white rounded-2xl overflow-hidden  shadow-md hover:shadow-2xl transition-all duration-300"
             >
               {/* BIG IMAGE */}
               <div className="relative w-full h-52">
+                
                 <Image
                   src={dept.image}
                   alt={dept.name}
@@ -100,8 +83,8 @@ const DepartmentsSection = () => {
                   {dept.short}
                 </p>
 
-                <Link
-                  href={`/departments/${dept.id}`}
+               <Link
+                  href={`/academic/${dept.id}`}
                   className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 hover:border-b border-b-0 transition-all"
                 >
                   <span>Explore Department</span>

@@ -5,7 +5,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import useUser from "@/hooks/useUser";
+import useUser from "@/src/hooks/useUser";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,15 +19,14 @@ const Navbar = () => {
     { href: "/notice", label: "Notice" },
     { href: "/academic", label: "Academic" },
     { href: "/instructors", label: "Instructor" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-    { href: "/about", label: "About MUPI" },
   ];
 
   const navLinkClass = (href) =>
     `relative text-xl pb-1 transition-all duration-300 before:absolute before:-bottom-1 before:left-0 before:h-[3px] before:bg-[#00455D] 
-     before:w-0 before:transition-all before:duration-300 hover:before:w-full ${
-       pathname === href ? "font-semibold text-primary before:w-full" : "text-gray-800"
-     }`;
+     before:w-0 before:transition-all before:duration-300 hover:before:w-full ${pathname === href ? "font-semibold text-primary before:w-full" : "text-gray-800"
+    }`;
 
   const handleDashboardRedirect = () => {
     if (!user) return;
@@ -123,9 +122,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden bg-white w-full absolute top-full left-0 shadow-lg z-50 overflow-hidden transition-all duration-500 ease-in-out ${
-          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`md:hidden bg-white w-full absolute top-full left-0 shadow-lg z-50 overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <ul className="flex flex-col gap-4 p-4">
           {links.map((link) => (

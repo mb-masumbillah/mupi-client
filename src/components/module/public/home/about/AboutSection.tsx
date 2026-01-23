@@ -1,4 +1,4 @@
-import Button from "@/components/ui/Button";
+import Button from "@/src/components/ui/Button";
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 
@@ -7,7 +7,6 @@ const AboutSection = () => {
     <section className="bg-gray-100 py-20 ">
       <div className="max-width mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
-          
           {/* LEFT SIDE - TEXT */}
           <div>
             <span className="text-primary font-semibold tracking-wide uppercase">
@@ -21,11 +20,11 @@ const AboutSection = () => {
             <div className="w-24 h-1 bg-primary mt-4 rounded-full" />
 
             <p className="mt-6 text-gray-700 leading-relaxed text-lg">
-              Munshiganj Polytechnic Institute is a renowned government technical
-              institution committed to delivering high-quality diploma-level
-              engineering education. Since its establishment, the institute has
-              played a significant role in producing skilled professionals for
-              national and international industries.
+              Munshiganj Polytechnic Institute is a renowned government
+              technical institution committed to delivering high-quality
+              diploma-level engineering education. Since its establishment, the
+              institute has played a significant role in producing skilled
+              professionals for national and international industries.
             </p>
 
             <p className="mt-4 text-gray-700 leading-relaxed text-lg">
@@ -35,8 +34,11 @@ const AboutSection = () => {
               environment, we ensure the comprehensive development of our
               students.
             </p>
-            <Button text="About us" className="px-10 border hover:border mt-5" icon={<MoveRight/>} />
-        
+            <Button
+              text="About us"
+              className="px-10 border hover:border mt-5"
+              icon={<MoveRight />}
+            />
           </div>
 
           {/* RIGHT SIDE - 3 IMAGES */}
@@ -71,7 +73,6 @@ const AboutSection = () => {
               />
             </div>
           </div>
-
         </div>
       </div>
     </section>

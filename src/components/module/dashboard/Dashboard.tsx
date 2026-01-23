@@ -1,12 +1,14 @@
 "use client";
 
-import useUser from "@/hooks/useUser";
+import useUser from "@/src/hooks/useUser";
 import SuperAdminNavItem from "../../ui/NavItem/SuperAdminNavItem";
 import { Home, LogOut, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import StudentNavItem from "../../ui/NavItem/StudentNavItem";
+import InstructorNavItem from "../../ui/NavItem/InstructorNavItem";
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -14,21 +16,16 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logoutUser } = useUser();
+  const { logoutUser, user } = useUser();
   const router = useRouter();
 
   // replace with RTK Query / Auth context
-  const designation:
-    | "superAdmin"
-    | "temporaryAdmin"
-    | "student"
-    | "instructor" = "superAdmin";
+  const designation = user?.role
 
   const handleLogout = () => {
     logoutUser();
     router.replace("/");
   };
-
 
   const navClass = (isActive: boolean) =>
     `px-3 py-2 rounded flex justify-between items-center ${
@@ -70,10 +67,15 @@ const Dashboard = ({ children }: DashboardProps) => {
 
         <div className="p-4 pt-8 pl-0 space-y-3 flex-1 overflow-y-auto">
           {designation === "superAdmin" && (
-            <SuperAdminNavItem
-              navClass={navClass}
-            />
+            <SuperAdminNavItem navClass={navClass} />
           )}
+          {designation === "student" && (
+            <StudentNavItem navClass={navClass} />
+          )}
+          {designation === "instructor" && (
+            <InstructorNavItem navClass={navClass} />
+          )}
+
           {/* TemporaryAdminNavItem, StudentNavItem, InstructorNavItem */}
         </div>
 
@@ -96,7 +98,7 @@ const Dashboard = ({ children }: DashboardProps) => {
 
       <main className="flex-1 h-full overflow-y-auto ml-0 lg:ml-64 transition-all">
         <div className="pb-6 pt-6 border-b border-gray-300 text-2xl font-bold bg-white sticky top-0 text-center lg:text-left lg:pl-6">
-          {designation.toUpperCase()} DASHBOARD
+           DASHBOARD
         </div>
         <div className="p-6">{children}</div>
       </main>

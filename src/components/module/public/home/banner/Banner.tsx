@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import Image from "next/image";
-import Button from "@/components/ui/Button";
+import Button from "@/src/components/ui/Button";
 
 const Banner = () => {
   return (

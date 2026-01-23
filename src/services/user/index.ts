@@ -35,6 +35,29 @@ export const registerInstructor = async (formData: FormData) => {
   }
 };
 
+export const createTemporaryAdmin = async(formData:FormData) =>{
+  const token = (await cookies()).get("accessToken")?.value
+
+  if(!token) throw new Error("Unauthorized")
+
+  try{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/create-temporaryAdmin`, {
+      method: "POST",
+      headers:{
+        authorization: token
+      },
+      body:formData,
+    })
+
+    const result = await res.json()
+
+    return result
+
+  }catch(error:any){
+    throw new Error(error?.message)
+  }
+}
+
 export const chnageStatus = async (email: string) => {
   const token = (await cookies()).get("accessToken")?.value;
 

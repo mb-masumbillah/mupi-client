@@ -1,0 +1,181 @@
+[
+  {
+    "id": "cst",
+    "name": "Computer Science & Technology",
+    "shortName": "CST",
+    "image": "/academic/computer.png",
+    "description": "Computer Science & Technology department focuses on programming, software development, networking, database systems and modern computing technologies.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 200,
+    "skills": [
+      "Web Development",
+      "Software Engineering",
+      "Networking",
+      "Database Management",
+      "AI & Machine Learning"
+    ],
+    "career": [
+      "Web Developer",
+      "Software Engineer",
+      "Network Engineer",
+      "System Analyst",
+      "Freelancer"
+    ]
+  },
+  {
+    "id": "et",
+    "name": "Electrical Technology",
+    "shortName": "ET",
+    "image": "/academic/Electrical.png",
+    "description": "Electrical Technology department deals with electrical circuits, power systems, industrial electronics and electrical machines.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 200,
+    "skills": [
+      "Electrical Wiring",
+      "Power Distribution",
+      "PLC",
+      "Motor Control",
+      "Industrial Automation"
+    ],
+    "career": [
+      "Electrician",
+      "Sub-Assistant Engineer",
+      "Power Plant Technician",
+      "Industrial Technician"
+    ]
+  },
+  {
+    "id": "mt",
+    "name": "Mechanical Technology",
+    "shortName": "MT",
+    "image": "/academic/Mechanical.png",
+    "description": "Mechanical Technology department focuses on machines, manufacturing processes, CAD design and industrial mechanics.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 200,
+    "skills": [
+      "Machine Design",
+      "Welding",
+      "CNC Machine",
+      "AutoCAD",
+      "Industrial Maintenance"
+    ],
+    "career": [
+      "Mechanical Engineer",
+      "Maintenance Engineer",
+      "Production Supervisor",
+      "CAD Designer"
+    ]
+  },
+  {
+    "id": "ct",
+    "name": "Civil Technology",
+    "shortName": "CT",
+    "image": "/academic/Civil.png",
+    "description": "Civil Technology department focuses on construction, surveying, structural design and infrastructure development.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 200,
+    "skills": [
+      "Building Construction",
+      "Surveying",
+      "AutoCAD",
+      "Estimation",
+      "Structural Drawing"
+    ],
+    "career": [
+      "Civil Supervisor",
+      "Site Engineer",
+      "Surveyor",
+      "Construction Manager"
+    ]
+  },
+  {
+    "id": "ent",
+    "name": "Electronics Technology",
+    "shortName": "ENT",
+    "image": "/academic/Electronics.png",
+    "description": "Electronics Technology department focuses on electronic circuits, communication systems and embedded technology.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 200,
+    "skills": [
+      "Circuit Design",
+      "Microcontroller",
+      "Embedded Systems",
+      "Troubleshooting",
+      "Communication Devices"
+    ],
+    "career": [
+      "Electronics Technician",
+      "Embedded Engineer",
+      "Service Engineer"
+    ]
+  },
+  {
+    "id": "rac",
+    "name": "Refrigeration & Air Conditioning Technology",
+    "shortName": "RAC",
+    "image": "/academic/RAC.png",
+    "description": "RAC Technology department focuses on cooling systems, air conditioning, refrigeration and HVAC systems.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 100,
+    "skills": [
+      "AC Installation",
+      "Refrigeration System",
+      "HVAC",
+      "Maintenance",
+      "Troubleshooting"
+    ],
+    "career": [
+      "AC Technician",
+      "HVAC Engineer",
+      "Maintenance Supervisor"
+    ]
+  },
+  {
+    "id": "emt",
+    "name": "Electro-Medical Technology",
+    "shortName": "EMT",
+    "image": "/academic/Electro-Medical.png",
+    "description": "Electro-Medical Technology department focuses on medical equipment, hospital devices and biomedical electronics.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 100,
+    "skills": [
+      "Medical Equipment Handling",
+      "Biomedical Devices",
+      "Maintenance",
+      "Calibration"
+    ],
+    "career": [
+      "Biomedical Technician",
+      "Hospital Equipment Engineer",
+      "Medical Device Specialist"
+    ]
+  },
+  {
+    "id": "ipct",
+    "name": "Instrumentation & Process Control Technology",
+    "shortName": "EMT",
+    "image": "/academic/IPCT.png",
+    "description": "Instrumentation and Process Control Technology (IPCT) is often referred to as the Brain and Nervous System of modern industries.",
+    "duration": "4 Years",
+    "shift": "Morning & Evening",
+    "seat": 100,
+    "skills": [
+      "Medical Equipment Handling",
+      "Biomedical Devices",
+      "Maintenance",
+      "Calibration"
+    ],
+    "career": [
+      "Biomedical Technician",
+      "Hospital Equipment Engineer",
+      "Medical Device Specialist"
+    ]
+  }
+]

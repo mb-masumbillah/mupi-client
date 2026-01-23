@@ -2,119 +2,137 @@
 
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import TextInput from "@/components/form/TextInput";
-import ImageUpload from "@/components/form/ImageUpload";
+import { useState } from "react";
+import ImageUpload from "@/src/components/form/ImageUpload";
+import TextInput from "@/src/components/form/TextInput";
+import { createTemporaryAdmin } from "@/src/services/user";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-interface TemporaryAdminFormData {
+interface Props {
+  onClose: () => void;
+}
+
+interface FormValues {
   fullName: string;
   email: string;
   password: string;
-  image: File | null;
+  image: File;
 }
 
-const TemporaryAdminCreateForm = () => {
-  const { handleSubmit, control } =
-    useForm<TemporaryAdminFormData>({
-      defaultValues: {
-        image: null,
-      },
-    });
+const CreateTemporaryAdminForm = ({ onClose }: Props) => {
+  const router = useRouter();
 
-  const onSubmit = (data: TemporaryAdminFormData) => {
-    console.log("Temporary Admin Data:", data);
+  const { control, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      password: "123456",
+    },
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    const payload = {
+      password: data.password,
+      temporaryAdmin: {
+        fullName: data.fullName,
+        email: data.email,
+      },
+    };
 
     const formData = new FormData();
-    formData.append("fullName", data.fullName);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    if (data.image) {
-      formData.append("image", data.image);
+    formData.append("data", JSON.stringify(payload));
+    formData.append("file", data.image);
+
+    try {
+      const res = await createTemporaryAdmin(formData);
+
+      console.log(res);
+
+      if (res.success) {
+        Swal.fire({
+          title: "রেজিস্ট্রেশন সফল হয়েছে 🎉",
+          text: "আপনি Temporary Admin রেজিস্টার সফলভাবে সম্পন্ন করেছেন। এখন আপনি Temporary Admin হয়েছেন  ",
+          icon: "success",
+          confirmButtonText: "Ok",
+        }).then(() => {
+          router.replace("/");
+        });
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error: any) {
+      throw new Error(error);
     }
 
-    // 👉 API call here
+    onClose();
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 space-y-6 animate-fadeIn">
-
-        {/* 🔰 Header with Logo */}
-        <div className="text-center space-y-2">
-          <div className="flex justify-center">
-            <Image
-              src="/logo.svg"
-              alt="Institute Logo"
-              width={90}
-              height={90}
-              priority
-            />
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center px-4">
+      {/* MODAL */}
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 animate-fadeIn">
+        {/* HEADER */}
+        <div className="text-center mb-6">
+          <div className="flex justify-center mb-3">
+            <Image src="/logo.svg" alt="logo" width={70} height={70} />
           </div>
 
           <h2 className="text-2xl font-bold text-gray-800">
-            Temporary Admin Create
+            Create Temporary Admin
           </h2>
-          <p className="text-sm text-gray-500">
-            Create a temporary admin account
+
+          <p className="text-sm text-gray-500 mt-1">
+            This admin will have limited access
           </p>
         </div>
 
-        {/* 🧾 Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-        >
-          <TextInput<TemporaryAdminFormData>
+        {/* FORM */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <TextInput
             label="Full Name"
             name="fullName"
             control={control}
             rules={{ required: "Full name is required" }}
-            placeholder="Enter full name"
+            placeholder="Rakib Hasan"
           />
 
-          <TextInput<TemporaryAdminFormData>
-            label="Email"
+          <TextInput
+            label="Email Address"
             name="email"
-            type="email"
             control={control}
-            rules={{
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter a valid email",
-              },
-            }}
-            placeholder="admin@example.com"
+            rules={{ required: "Email is required" }}
+            placeholder="tempadmin@mupi.edu.bd"
           />
 
-          <TextInput<TemporaryAdminFormData>
-            label="Password"
+          <TextInput
+            label="Default Password"
             name="password"
-            type="password"
             control={control}
-            rules={{
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Minimum 6 characters",
-              },
-            }}
-            placeholder="••••••"
+            placeholder="123456"
           />
 
-          {/* 📷 Image Upload */}
-          <ImageUpload<TemporaryAdminFormData>
-            label="Admin Image"
+          <ImageUpload
+            label="Profile Image"
             name="image"
             control={control}
             rules={{ required: "Image is required" }}
           />
 
-          <div className="md:col-span-2 flex justify-center mt-4">
+          {/* BUTTONS */}
+          <div className="flex gap-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full py-2.5 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+            >
+              Cancel
+            </button>
+
             <button
               type="submit"
-              className="bg-[#00455D] text-white text-base md:text-lg px-6 py-2 md:px-8 md:py-3 rounded-xl hover:bg-transparent border-transparent border hover:border-[#00455D] hover:text-[#00455D] transition"
+              className="w-full py-2.5 rounded-xl bg-[#00455D] text-white font-medium hover:bg-[#003448] transition"
             >
-              Create Temporary Admin
+              Create Admin
             </button>
           </div>
         </form>
@@ -123,4 +141,4 @@ const TemporaryAdminCreateForm = () => {
   );
 };
 
-export default TemporaryAdminCreateForm;
+export default CreateTemporaryAdminForm;

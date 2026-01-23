@@ -13,10 +13,10 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { toast } from "sonner";
 
-import { getAllStudents, deleteStudentPermanent } from "@/services/student";
-import StudentApprovalDetails from "@/components/module/dashboard/StudentApprovalDetails";
-import { chnageStatus } from "@/services/user";
-import useUser from "@/hooks/useUser";
+import { getAllStudents, deleteStudentPermanent } from "@/src/services/student";
+import StudentApprovalDetails from "@/src/components/module/dashboard/student/StudentApprovalDetails";
+import { chnageStatus } from "@/src/services/user";
+import useUser from "@/src/hooks/useUser";
 
 const MySwal = withReactContent(Swal);
 

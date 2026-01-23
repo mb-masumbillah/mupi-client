@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
-import {jwtDecode} from "jwt-decode";
-import { IUser } from "@/types/user";
-import { LoginFormValues } from "@/components/module/auth/login/LoginForm";
+import { jwtDecode } from "jwt-decode";
+import { IUser } from "@/src/types/user";
+import { LoginFormValues } from "@/src/components/module/auth/login/LoginForm";
 
 export const login = async (userData: LoginFormValues) => {
   try {
@@ -15,7 +15,7 @@ export const login = async (userData: LoginFormValues) => {
     const result = await res.json();
 
     if (result?.success && result?.data?.accessToken) {
-      Cookies.set("accessToken", result.data.accessToken, { expires: 10 }); // 10 মিনিট 
+      Cookies.set("accessToken", result.data.accessToken, { expires: 10 }); // 10 মিনিট
       // 2 মিনিট { expires: 1 / 720 }
     }
 

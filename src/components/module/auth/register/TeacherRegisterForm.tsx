@@ -2,9 +2,9 @@
 
 import { useForm, useWatch } from "react-hook-form";
 import Image from "next/image";
-import TextInput from "@/components/form/TextInput";
-import ImageUpload from "@/components/form/ImageUpload";
-import { registerInstructor } from "@/services/user";
+import TextInput from "@/src/components/form/TextInput";
+import ImageUpload from "@/src/components/form/ImageUpload";
+import { registerInstructor } from "@/src/services/user";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -25,14 +25,14 @@ const TeacherRegisterForm = () => {
       image: null,
     },
   });
-  const router = useRouter() 
+  const router = useRouter();
 
   const password = useWatch({
     control,
     name: "password",
   });
 
-  const onSubmit = async(data: TeacherRegisterFormData) => {
+  const onSubmit = async (data: TeacherRegisterFormData) => {
     const instructorData = {
       password: data.password,
       instructor: {
@@ -43,16 +43,16 @@ const TeacherRegisterForm = () => {
       },
     };
 
-    console.log(instructorData)
+    console.log(instructorData);
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(instructorData));
     if (data.image) formData.append("file", data.image);
 
     try {
-      const res = await registerInstructor(formData)
+      const res = await registerInstructor(formData);
 
-      console.log(res)
+      console.log(res);
 
       if (res.success) {
         Swal.fire({
@@ -68,7 +68,6 @@ const TeacherRegisterForm = () => {
       }
 
       reset();
-
     } catch (error: any) {
       throw new Error(error);
     }

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
-import { getCurrentUser, logout } from "@/services/auth";
-import { IUser } from "@/types/user";
+import { getCurrentUser, logout } from "@/src/services/auth";
+import { IUser } from "@/src/types/user";
 
 interface IUserProvider {
   user: IUser | null;
